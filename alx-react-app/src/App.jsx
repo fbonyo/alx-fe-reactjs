@@ -1,17 +1,26 @@
 // src/App.jsx - Final Code
 
-// Import the three new components from the './components' directory
-import Header from './components/Header';
-import MainContent from './components/MainContent';
-import Footer from './components/Footer';
+// Import the new UserProfile component
+import UserProfile from './components/UserProfile';
 
 function App() {
   return (
     <div className="App">
-      {/* Include components in the specified order */}
-      <Header />
-      <MainContent />
-      <Footer />
+      <h1>User Profile Card Demo</h1>
+      
+      {/* 3. Use the component with props as specified */}
+      <UserProfile 
+        name="Alice" 
+        age="25" 
+        bio="Loves hiking and photography" 
+      />
+      
+      {/* You can add more profiles easily! */}
+      <UserProfile 
+        name="Bob" 
+        age="30" 
+        bio="Full-stack developer and coffee enthusiast" 
+      />
     </div>
   );
 }
