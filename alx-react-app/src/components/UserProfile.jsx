@@ -1,13 +1,13 @@
-// src/components/UserProfile.jsx
+// src/components/UserProfile.jsx - FINAL FIX (Using 'props')
 
-function UserProfile({ name, age, bio }) {
+const UserProfile = (props) => { // Must use 'props' keyword and arrow function syntax
   return (
-    <div style={{ border: '1px solid #ccc', padding: '15px', margin: '20px', maxWidth: '300px' }}>
-      <h2>{name}</h2>
-      <p>Age: {age}</p>
-      <p>Bio: {bio}</p>
+    <div>
+      <h2>{props.name}</h2> 
+      <p>Age: {props.age}</p>
+      <p>Bio: {props.bio}</p>
     </div>
   );
-}
+}; // Note the semi-colon is outside the return statement
 
 export default UserProfile;
