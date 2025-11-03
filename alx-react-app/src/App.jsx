@@ -1,13 +1,17 @@
 // src/App.jsx - Final Code
 
-// 3a. Add this line to import the component from the new folder
-import WelcomeMessage from './components/WelcomeMessage';
+// Import the three new components from the './components' directory
+import Header from './components/Header';
+import MainContent from './components/MainContent';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    // 3b. Include the <WelcomeMessage /> component inside the return statement
     <div className="App">
-      <WelcomeMessage />
+      {/* Include components in the specified order */}
+      <Header />
+      <MainContent />
+      <Footer />
     </div>
   );
 }
