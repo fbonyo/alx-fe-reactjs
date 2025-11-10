@@ -1,4 +1,3 @@
-import React from 'react';
 import Header from './components/Header';
 import UserProfile from './components/UserProfile';
 import MainContent from './components/MainContent';
@@ -11,12 +10,12 @@ function App() {
     <div className="App">
       <Header />
       <UserProfile 
-        name="John Traveler" 
-        age={28} 
-        bio="Passionate explorer who loves discovering new cultures and hidden gems around the world."
+        name="John Doe"
+        age={28}
+        bio="Travel enthusiast and city explorer"
       />
-      <Counter />
       <MainContent />
+      <Counter />
       <Footer />
     </div>
   );
