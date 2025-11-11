@@ -1,6 +1,6 @@
-import { useRecipeStore } from './recipeStore'  // Change this line
+import { useRecipeStore } from './recipeStore'
 
-const Recipelist = () => {
+const RecipeList = () => {  // Change this line to RecipeList
   const recipes = useRecipeStore((state) => state.recipes)
 
   return (
@@ -15,4 +15,4 @@ const Recipelist = () => {
   )
 }
 
-export default Recipelist
+export default RecipeList  // Change this line to RecipeList
