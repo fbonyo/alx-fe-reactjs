@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useRecipeStore } from './recipeStore'
 import EditRecipeForm from './EditRecipeForm'
 import DeleteRecipeButton from './DeleteRecipeButton'
+import FavoriteButton from './FavoriteButton'
 import { Link } from 'react-router-dom'
 
 const RecipeDetails = () => {
@@ -25,8 +26,11 @@ const RecipeDetails = () => {
       <Link to="/">← Back to Recipes</Link>
       <h1>{recipe.title}</h1>
       <p>{recipe.description}</p>
+      <div style={{ marginBottom: '20px' }}>
+        <FavoriteButton recipeId={recipe.id} />
+        <DeleteRecipeButton recipeId={recipe.id} />
+      </div>
       <EditRecipeForm recipe={recipe} />
-      <DeleteRecipeButton recipeId={recipe.id} />
     </div>
   )
 }
