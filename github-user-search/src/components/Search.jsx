@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { searchUsers } from '../services/githubService';
+// FIX: Ensure both searchUsers (Task 2) and fetchUserData (Task 1) are imported
+import { searchUsers, fetchUserData } from '../services/githubService';
 
 const Search = () => {
   // State for advanced search inputs (Task 2, Step 1)
@@ -13,16 +14,39 @@ const Search = () => {
   const [error, setError] = useState(null);
   const [totalCount, setTotalCount] = useState(0);
 
+  // State for single-user search result (Task 1 state)
+  const [singleUser, setSingleUser] = useState(null);
+
   const handleAdvancedSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     setUsers([]);
+    setSingleUser(null);
     setTotalCount(0);
 
     const numericRepos = parseInt(minRepos || '0');
+    const hasAdvancedFilters = location.trim() || numericRepos > 0;
 
-    // Validation
+    // --- Task 1 Logic Check: If only a username is provided, do a single user fetch ---
+    if (username.trim() && !hasAdvancedFilters) {
+        try {
+            // Task 1: Basic search implementation
+            const userData = await fetchUserData(username.trim()); 
+            setSingleUser(userData);
+            setError(null);
+        } catch (err) {
+            setError('Looks like we cant find the user.');
+            setSingleUser(null);
+        } finally {
+            setLoading(false);
+        }
+        return; 
+    }
+
+    // --- Task 2 Logic: Advanced Search ---
+
+    // Validation for advanced search
     if (!username.trim() && !location.trim() && numericRepos === 0) {
         setError("Please enter a keyword or use at least one advanced filter.");
         setLoading(false);
@@ -40,6 +64,21 @@ const Search = () => {
       setLoading(false);
     }
   };
+    // ... (rest of the component's render logic, which is fine) ...
+  const renderSingleUser = () => (
+    <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+        <h3 className="text-xl font-bold text-gray-800 mb-2">User Found (Task 1 Result):</h3>
+        <div className="flex items-center">
+            <img src={singleUser.avatar_url} alt={`${singleUser.login} avatar`} className="w-16 h-16 rounded-full mr-4"/>
+            <div>
+                <p className="text-lg font-semibold">{singleUser.name || singleUser.login}</p>
+                <p className="text-sm text-gray-500">@{singleUser.login}</p>
+                <a href={singleUser.html_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline text-sm">View Profile</a>
+            </div>
+        </div>
+        
+    </div>
+  );
 
   return (
     <div className="p-4 md:p-8 bg-gray-50 min-h-screen">
@@ -113,7 +152,7 @@ const Search = () => {
         </button>
       </form>
 
-      {/* Results Display (Task 2, Step 3: Enhancement) */}
+      {/* Results Display (Tasks 1 & 2) */}
       <div className="max-w-3xl mx-auto mt-8">
         
         {loading && <p className="text-center text-xl p-4 text-blue-600 font-semibold">Loading...</p>}
@@ -124,7 +163,10 @@ const Search = () => {
           </p>
         )}
 
-        {/* Display Total Count */}
+        {/* Task 1 Single User Result */}
+        {singleUser && renderSingleUser()}
+
+        {/* Task 2 Advanced Search Results */}
         {totalCount > 0 && (
           <p className="text-xl font-bold text-gray-800 mb-6 border-b pb-2">
             Results: **{totalCount.toLocaleString()}** user(s) found. Displaying {users.length} detailed result(s).
@@ -172,7 +214,7 @@ const Search = () => {
              </p>
         )}
         
-        {/* Pagination/Load More Note (Task 2, Step 3) - Since we limit results to 5 per search: */}
+        {/* Pagination/Load More Note */}
         {totalCount > 5 && (
             <p className="text-center text-sm text-gray-600 mt-4 italic">
                 {users.length} of {totalCount.toLocaleString()} results displayed. (A "Load More" button would go here for full pagination).
