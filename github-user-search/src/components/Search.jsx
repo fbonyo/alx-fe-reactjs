@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { fetchUserData } from '../services/githubService';
 
-const SearchBar = () => {
+const Search = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search-bar">
+    <div className="search-component">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -42,7 +42,7 @@ const SearchBar = () => {
         </button>
       </form>
 
-      {/* Conditional Rendering for Results */}
+      {/* Conditional Rendering based on state */}
       {loading && (
         <div className="loading-message">
           <p>Loading...</p>
@@ -86,4 +86,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default Search;
