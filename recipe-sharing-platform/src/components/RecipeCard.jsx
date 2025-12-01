@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const RecipeCard = ({ recipe }) => {
   const getDifficultyColor = (difficulty) => {
     switch (difficulty) {
@@ -9,7 +11,7 @@ const RecipeCard = ({ recipe }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group cursor-pointer">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group">
       {/* Recipe Image */}
       <div className="relative h-48 overflow-hidden">
         <img 
@@ -31,9 +33,11 @@ const RecipeCard = ({ recipe }) => {
       {/* Recipe Content */}
       <div className="p-6">
         <div className="flex justify-between items-start mb-3">
-          <h3 className="text-xl font-bold text-gray-800 group-hover:text-orange-600 transition-colors">
-            {recipe.title}
-          </h3>
+          <Link to={`/recipe/${recipe.id}`}>
+            <h3 className="text-xl font-bold text-gray-800 group-hover:text-orange-600 transition-colors">
+              {recipe.title}
+            </h3>
+          </Link>
         </div>
         
         <p className="text-gray-600 mb-4 line-clamp-2">
@@ -54,9 +58,12 @@ const RecipeCard = ({ recipe }) => {
 
         {/* Action Buttons */}
         <div className="flex space-x-3">
-          <button className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition duration-300 group-hover:from-orange-600 group-hover:to-red-600">
+          <Link 
+            to={`/recipe/${recipe.id}`}
+            className="flex-1 bg-gradient-to-r from-orange-500 to-red-500 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition duration-300 group-hover:from-orange-600 group-hover:to-red-600 text-center"
+          >
             View Recipe
-          </button>
+          </Link>
           <button className="w-12 h-12 flex items-center justify-center bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition">
             <span className="text-xl">❤️</span>
           </button>
