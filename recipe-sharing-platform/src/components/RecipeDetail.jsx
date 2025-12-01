@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import recipeData from '../data.json';
 
 const RecipeDetail = () => {
   const { id } = useParams();
@@ -9,25 +10,9 @@ const RecipeDetail = () => {
   const [servings, setServings] = useState(4);
   const [activeTab, setActiveTab] = useState('ingredients');
 
-  // Sample detailed recipe data (in a real app, this would come from an API)
-  const detailedRecipes = [
-    {
-      id: 1,
-      title: "Spaghetti Carbonara",
-      summary: "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-      image: "https://images.unsplash.com/photo-1621996346565-e3dbc353d2b5?w=1200&h=600&fit=crop",
-      cookingTime: "30 min",
-      difficulty: "Medium",
-      rating: 4.7,
-      reviews: 128,
-      author: "Maria Rossi",
-      authorAvatar: "👩‍🍳",
-      prepTime: "15 min",
-      cookTime: "15 min",
-      totalTime: "30 min",
-      calories: "450 cal",
-      category: "Italian",
-      tags: ["Pasta", "Italian", "Quick", "Dinner"],
+  // Extended details for each recipe (in a real app, this would come from an API)
+  const detailedRecipes = {
+    1: {
       ingredients: [
         { name: "Spaghetti", amount: "400g", note: "or any long pasta" },
         { name: "Eggs", amount: "4 large" },
@@ -57,25 +42,15 @@ const RecipeDetail = () => {
         carbs: "45g",
         fat: "22g",
         fiber: "3g",
-      }
+      },
+      reviews: 128,
+      prepTime: "15 min",
+      cookTime: "15 min",
+      totalTime: "30 min",
+      calories: "450 cal",
+      tags: ["Pasta", "Italian", "Quick", "Dinner"],
     },
-    {
-      id: 2,
-      title: "Chicken Tikka Masala",
-      summary: "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-      image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=1200&h=600&fit=crop",
-      cookingTime: "45 min",
-      difficulty: "Medium",
-      rating: 4.8,
-      reviews: 215,
-      author: "Raj Patel",
-      authorAvatar: "👨‍🍳",
-      prepTime: "20 min",
-      cookTime: "25 min",
-      totalTime: "45 min",
-      calories: "380 cal",
-      category: "Indian",
-      tags: ["Chicken", "Indian", "Creamy", "Spicy"],
+    2: {
       ingredients: [
         { name: "Chicken breast", amount: "500g", note: "boneless, cubed" },
         { name: "Yogurt", amount: "1 cup" },
@@ -112,28 +87,90 @@ const RecipeDetail = () => {
         carbs: "12g",
         fat: "24g",
         fiber: "2g",
-      }
+      },
+      reviews: 215,
+      prepTime: "20 min",
+      cookTime: "25 min",
+      totalTime: "45 min",
+      calories: "380 cal",
+      tags: ["Chicken", "Indian", "Creamy", "Spicy"],
     },
-    // Add more detailed recipes as needed
-  ];
+    3: {
+      ingredients: [
+        { name: "Mixed vegetables", amount: "500g", note: "broccoli, carrots, bell peppers" },
+        { name: "Garlic", amount: "3 cloves", note: "minced" },
+        { name: "Ginger", amount: "1 tbsp", note: "grated" },
+        { name: "Soy sauce", amount: "3 tbsp" },
+        { name: "Sesame oil", amount: "2 tbsp" },
+        { name: "Cornstarch", amount: "1 tbsp" },
+        { name: "Vegetable broth", amount: "1/2 cup" },
+        { name: "Green onions", amount: "3", note: "chopped" },
+      ],
+      instructions: [
+        "Chop all vegetables into bite-sized pieces.",
+        "Heat sesame oil in a wok or large pan over high heat.",
+        "Add garlic and ginger, stir-fry for 30 seconds until fragrant.",
+        "Add vegetables and stir-fry for 5-7 minutes until crisp-tender.",
+        "Mix cornstarch with vegetable broth and soy sauce.",
+        "Pour sauce over vegetables and cook until thickened.",
+        "Garnish with green onions and serve immediately.",
+      ],
+      tips: [
+        "Keep the heat high for proper stir-frying.",
+        "Don't overcrowd the pan - cook in batches if needed.",
+        "Add protein like tofu or chicken for a complete meal.",
+      ],
+      nutrition: {
+        calories: 180,
+        protein: "5g",
+        carbs: "22g",
+        fat: "8g",
+        fiber: "6g",
+      },
+      reviews: 89,
+      prepTime: "10 min",
+      cookTime: "10 min",
+      totalTime: "20 min",
+      calories: "180 cal",
+      tags: ["Vegetarian", "Healthy", "Quick", "Asian"],
+    }
+  };
 
   useEffect(() => {
-    // Simulate API call
-    const fetchRecipe = () => {
-      setLoading(true);
-      setTimeout(() => {
-        const foundRecipe = detailedRecipes.find(r => r.id === parseInt(id));
-        if (foundRecipe) {
-          setRecipe(foundRecipe);
-        } else {
-          // If recipe not found, redirect to home
-          navigate('/');
+    // Find recipe from data.json
+    const foundRecipe = recipeData.find(r => r.id === parseInt(id));
+    
+    if (foundRecipe) {
+      // Merge basic data from data.json with detailed data
+      const detailedInfo = detailedRecipes[foundRecipe.id] || {};
+      setRecipe({
+        ...foundRecipe,
+        ...detailedInfo,
+        // Ensure we have defaults for missing fields
+        author: foundRecipe.author || "Anonymous Chef",
+        reviews: detailedInfo.reviews || 0,
+        prepTime: detailedInfo.prepTime || "10 min",
+        cookTime: detailedInfo.cookTime || foundRecipe.cookingTime,
+        totalTime: detailedInfo.totalTime || foundRecipe.cookingTime,
+        calories: detailedInfo.calories || "300 cal",
+        tags: detailedInfo.tags || [foundRecipe.category || "General"],
+        ingredients: detailedInfo.ingredients || [],
+        instructions: detailedInfo.instructions || [],
+        tips: detailedInfo.tips || [],
+        nutrition: detailedInfo.nutrition || {
+          calories: 300,
+          protein: "15g",
+          carbs: "30g",
+          fat: "15g",
+          fiber: "5g",
         }
-        setLoading(false);
-      }, 500);
-    };
-
-    fetchRecipe();
+      });
+    } else {
+      // If recipe not found, redirect to home
+      navigate('/');
+    }
+    
+    setLoading(false);
   }, [id, navigate]);
 
   const handleServingsChange = (newServings) => {
@@ -412,23 +449,28 @@ const RecipeDetail = () => {
           <div className="bg-white rounded-xl shadow-lg p-6">
             <h3 className="text-xl font-bold text-gray-800 mb-4">Similar Recipes</h3>
             <div className="space-y-4">
-              {[
-                { name: "Fettuccine Alfredo", time: "25 min", category: "Italian" },
-                { name: "Penne Arrabbiata", time: "30 min", category: "Italian" },
-                { name: "Shrimp Scampi", time: "20 min", category: "Seafood" },
-              ].map((similar, index) => (
-                <div key={index} className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition cursor-pointer">
-                  <div className="w-12 h-12 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg mr-4"></div>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-gray-800">{similar.name}</h4>
-                    <div className="flex items-center text-sm text-gray-500">
-                      <span className="mr-3">{similar.time}</span>
-                      <span>{similar.category}</span>
+              {recipeData
+                .filter(r => r.id !== recipe.id && r.category === recipe.category)
+                .slice(0, 3)
+                .map((similar) => (
+                  <Link 
+                    key={similar.id} 
+                    to={`/recipe/${similar.id}`}
+                    className="flex items-center p-3 hover:bg-gray-50 rounded-lg transition cursor-pointer"
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-r from-orange-100 to-red-100 rounded-lg mr-4 flex items-center justify-center">
+                      <span className="text-2xl">🍴</span>
                     </div>
-                  </div>
-                  <span className="text-gray-400">→</span>
-                </div>
-              ))}
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-800">{similar.title}</h4>
+                      <div className="flex items-center text-sm text-gray-500">
+                        <span className="mr-3">{similar.cookingTime}</span>
+                        <span>{similar.category}</span>
+                      </div>
+                    </div>
+                    <span className="text-gray-400">→</span>
+                  </Link>
+                ))}
             </div>
           </div>
         </div>
