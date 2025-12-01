@@ -6,7 +6,7 @@ const AddRecipeForm = () => {
   const [formData, setFormData] = useState({
     title: '',
     ingredients: '',
-    instructions: ''
+    steps: '' // Changed from 'instructions' to 'steps'
   });
 
   const [errors, setErrors] = useState({});
@@ -33,12 +33,18 @@ const AddRecipeForm = () => {
     // Required field validations
     if (!formData.title.trim()) newErrors.title = 'Recipe title is required';
     if (!formData.ingredients.trim()) newErrors.ingredients = 'Ingredients are required';
-    if (!formData.instructions.trim()) newErrors.instructions = 'Instructions are required';
+    if (!formData.steps.trim()) newErrors.steps = 'Preparation steps are required';
 
     // Check for at least 2 ingredients (split by new lines)
     const ingredientsArray = formData.ingredients.split('\n').filter(item => item.trim());
     if (ingredientsArray.length < 2) {
       newErrors.ingredients = 'Please enter at least 2 ingredients (one per line)';
+    }
+
+    // Check for at least 2 steps (split by new lines)
+    const stepsArray = formData.steps.split('\n').filter(step => step.trim());
+    if (stepsArray.length < 2) {
+      newErrors.steps = 'Please enter at least 2 preparation steps (one per line)';
     }
 
     return newErrors;
@@ -64,12 +70,32 @@ const AddRecipeForm = () => {
       setFormData({
         title: '',
         ingredients: '',
-        instructions: ''
+        steps: ''
       });
       
       // Show success message or navigate
       alert('Recipe submitted successfully!');
     }, 1000);
+  };
+
+  // This function explicitly uses target.value
+  const handleInputChange = (e) => {
+    const target = e.target;
+    const value = target.value; // Explicitly using target.value
+    const name = target.name;
+    
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Clear error for this field
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   };
 
   return (
@@ -93,7 +119,7 @@ const AddRecipeForm = () => {
                 type="text"
                 name="title"
                 value={formData.title}
-                onChange={handleChange}
+                onChange={handleInputChange} // Using the function that explicitly uses target.value
                 placeholder="Enter recipe title"
                 className={`w-full px-4 py-3 rounded-lg border ${errors.title ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-orange-500`}
               />
@@ -113,7 +139,7 @@ const AddRecipeForm = () => {
               <textarea
                 name="ingredients"
                 value={formData.ingredients}
-                onChange={handleChange}
+                onChange={handleInputChange} // Using the function that explicitly uses target.value
                 rows="6"
                 placeholder={`Example:
 • 2 cups all-purpose flour
@@ -130,7 +156,7 @@ const AddRecipeForm = () => {
               </div>
             </div>
 
-            {/* Instructions */}
+            {/* Preparation Steps */}
             <div className="bg-white rounded-xl shadow-lg p-6">
               <label className="block text-gray-700 font-medium mb-2">
                 Preparation Steps *
@@ -139,9 +165,9 @@ const AddRecipeForm = () => {
                 Write each step on a new line. Be clear and detailed.
               </p>
               <textarea
-                name="instructions"
-                value={formData.instructions}
-                onChange={handleChange}
+                name="steps"
+                value={formData.steps}
+                onChange={handleInputChange} // Using the function that explicitly uses target.value
                 rows="6"
                 placeholder={`Example:
 1. Preheat oven to 350°F (175°C)
@@ -149,13 +175,13 @@ const AddRecipeForm = () => {
 3. In another bowl, whisk wet ingredients
 4. Combine wet and dry ingredients
 5. Bake for 25-30 minutes until golden`}
-                className={`w-full px-4 py-3 rounded-lg border ${errors.instructions ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-orange-500`}
+                className={`w-full px-4 py-3 rounded-lg border ${errors.steps ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-orange-500`}
               />
-              {errors.instructions && (
-                <p className="mt-2 text-red-600 text-sm">{errors.instructions}</p>
+              {errors.steps && (
+                <p className="mt-2 text-red-600 text-sm">{errors.steps}</p>
               )}
               <div className="mt-2 text-sm text-gray-500">
-                Steps count: {formData.instructions.split('\n').filter(step => step.trim()).length}
+                Steps count: {formData.steps.split('\n').filter(step => step.trim()).length}
               </div>
             </div>
 
@@ -193,7 +219,7 @@ const AddRecipeForm = () => {
                   <ul className="list-disc list-inside text-red-600">
                     {errors.title && <li>{errors.title}</li>}
                     {errors.ingredients && <li>{errors.ingredients}</li>}
-                    {errors.instructions && <li>{errors.instructions}</li>}
+                    {errors.steps && <li>{errors.steps}</li>}
                   </ul>
                 </div>
               )}
