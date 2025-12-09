@@ -1,31 +1,21 @@
 import { useState } from "react";
 
 export default function RegistrationForm() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
-  const [errors, setErrors] = useState("");
-
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!formData.username || !formData.email || !formData.password) {
-      setErrors("All fields are required!");
+    if (!username || !email || !password) {
+      setError("All fields are required!");
       return;
     }
 
-    setErrors("");
-    console.log("Form submitted:", formData);
+    setError("");
+    console.log("Submitted:", { username, email, password });
     alert("User registered successfully (controlled form)!");
   };
 
@@ -33,16 +23,15 @@ export default function RegistrationForm() {
     <div>
       <h2>Registration Form (Controlled)</h2>
 
-      {errors && <p style={{ color: "red" }}>{errors}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
           <input
             type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
 
@@ -50,9 +39,8 @@ export default function RegistrationForm() {
           <label>Email:</label>
           <input
             type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -60,9 +48,8 @@ export default function RegistrationForm() {
           <label>Password:</label>
           <input
             type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
