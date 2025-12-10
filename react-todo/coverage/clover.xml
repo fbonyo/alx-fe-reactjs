@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1765383322421" clover="3.2.0">
+  <project timestamp="1765383322421" name="All files">
+    <metrics statements="27" coveredstatements="22" conditionals="6" coveredconditionals="6" methods="14" coveredmethods="12" elements="47" coveredelements="40" complexity="0" loc="27" ncloc="27" packages="2" files="5" classes="5"/>
+    <package name="src">
+      <metrics statements="5" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="App.js" path="C:\Users\Admin\Desktop\alx-fe-reactjs\react-todo\src\App.js">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="6" count="0" type="stmt"/>
+      </file>
+      <file name="App.jsx" path="C:\Users\Admin\Desktop\alx-fe-reactjs\react-todo\src\App.jsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="6" count="0" type="stmt"/>
+      </file>
+      <file name="index.js" path="C:\Users\Admin\Desktop\alx-fe-reactjs\react-todo\src\index.js">
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+      </file>
+      <file name="main.jsx" path="C:\Users\Admin\Desktop\alx-fe-reactjs\react-todo\src\main.jsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="6" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components">
+      <metrics statements="22" coveredstatements="22" conditionals="6" coveredconditionals="6" methods="12" coveredmethods="12"/>
+      <file name="TodoList.js" path="C:\Users\Admin\Desktop\alx-fe-reactjs\react-todo\src\components\TodoList.js">
+        <metrics statements="22" coveredstatements="22" conditionals="6" coveredconditionals="6" methods="12" coveredmethods="12"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="16" type="stmt"/>
+        <line num="11" count="16" type="stmt"/>
+        <line num="12" count="16" type="stmt"/>
+        <line num="14" count="16" type="stmt"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="16" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="28" count="16" type="stmt"/>
+        <line num="29" count="2" type="stmt"/>
+        <line num="31" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="36" count="16" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="40" count="16" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="60" count="50" type="stmt"/>
+        <line num="67" count="2" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="85" count="50" type="stmt"/>
+        <line num="86" count="50" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
