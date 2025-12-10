@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
-import Post from "./components/Post";
+import ProfileDetails from "./components/ProfileDetails";
+import ProfileSettings from "./components/ProfileSettings";
+import BlogPost from "./components/BlogPost";
 
 function App() {
-  // Simulate authentication
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
@@ -18,16 +19,23 @@ function App() {
           <Route path="/" element={<Home />} />
 
           {/* Login route */}
-          <Route path="/login" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
+          <Route
+            path="/login"
+            element={<Login onLogin={() => setIsAuthenticated(true)} />}
+          />
 
           {/* Protected Profile route with nested routes */}
           <Route
             path="/profile/*"
             element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
-          />
+          >
+            <Route path="details" element={<ProfileDetails />} />
+            <Route path="settings" element={<ProfileSettings />} />
+            <Route path="/" element={<p>Please select a sub-section above.</p>} />
+          </Route>
 
-          {/* Dynamic Post route */}
-          <Route path="/posts/:postId" element={<Post />} />
+          {/* Dynamic Blog route */}
+          <Route path="/blog/:id" element={<BlogPost />} />
 
           {/* Fallback route */}
           <Route path="*" element={<p>Page not found</p>} />
@@ -38,4 +46,6 @@ function App() {
 }
 
 export default App;
+
+
 
