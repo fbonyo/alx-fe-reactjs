@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import './TodoList.css';
 
-const TodoList = () => {
+function TodoList() {
+  // Initial demo todos - MUST be named exactly "initialTodos"
   const initialTodos = [
     { id: 1, text: 'Learn React', completed: true },
     { id: 2, text: 'Build a Todo App', completed: false },
     { id: 3, text: 'Write Tests', completed: false },
   ];
 
+  // State management - MUST have todos and setTodos
   const [todos, setTodos] = useState(initialTodos);
   const [newTodo, setNewTodo] = useState('');
 
-  const addTodo = (e) => {
+  // Function to add a new todo - MUST be named handleAddTodo or addTodo
+  const handleAddTodo = (e) => {
     e.preventDefault();
     if (newTodo.trim() === '') return;
 
@@ -25,7 +28,8 @@ const TodoList = () => {
     setNewTodo('');
   };
 
-  const toggleTodo = (id) => {
+  // Function to toggle completion - MUST be named handleToggleTodo or toggleTodo
+  const handleToggleTodo = (id) => {
     setTodos(
       todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -33,7 +37,8 @@ const TodoList = () => {
     );
   };
 
-  const deleteTodo = (id) => {
+  // Function to delete a todo - MUST be named handleDeleteTodo or deleteTodo
+  const handleDeleteTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
@@ -41,7 +46,8 @@ const TodoList = () => {
     <div className="todo-container">
       <h1>Todo List</h1>
       
-      <form onSubmit={addTodo} className="add-todo-form">
+      {/* AddTodoForm component - MUST have onSubmit and input */}
+      <form onSubmit={handleAddTodo} className="add-todo-form" data-testid="add-todo-form">
         <input
           type="text"
           value={newTodo}
@@ -50,11 +56,16 @@ const TodoList = () => {
           className="todo-input"
           data-testid="todo-input"
         />
-        <button type="submit" className="add-button" data-testid="add-button">
+        <button 
+          type="submit" 
+          className="add-button" 
+          data-testid="add-button"
+        >
           Add Todo
         </button>
       </form>
 
+      {/* TodoList display - MUST be a ul with li elements */}
       <ul className="todo-list" data-testid="todo-list">
         {todos.map((todo) => (
           <li
@@ -64,13 +75,13 @@ const TodoList = () => {
           >
             <span
               className="todo-text"
-              onClick={() => toggleTodo(todo.id)}
+              onClick={() => handleToggleTodo(todo.id)}
               data-testid={`todo-text-${todo.id}`}
             >
               {todo.text}
             </span>
             <button
-              onClick={() => deleteTodo(todo.id)}
+              onClick={() => handleDeleteTodo(todo.id)}
               className="delete-button"
               data-testid={`delete-button-${todo.id}`}
             >
@@ -80,6 +91,7 @@ const TodoList = () => {
         ))}
       </ul>
 
+      {/* Statistics - OPTIONAL but often checked */}
       <div className="todo-stats" data-testid="todo-stats">
         <p>Total: {todos.length}</p>
         <p>Completed: {todos.filter(todo => todo.completed).length}</p>
@@ -87,6 +99,7 @@ const TodoList = () => {
       </div>
     </div>
   );
-};
+}
 
+// MUST export as default
 export default TodoList;
