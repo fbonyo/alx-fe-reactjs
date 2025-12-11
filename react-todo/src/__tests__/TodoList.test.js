@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import TodoList from "../TodoList";
+import TodoList from "../components/TodoList";
 
 describe("TodoList Component", () => {
   test("renders TodoList component correctly", () => {
@@ -14,7 +14,7 @@ describe("TodoList Component", () => {
   test("adds a new todo", () => {
     render(<TodoList />);
     const input = screen.getByPlaceholderText("Add a new todo");
-    const button = screen.getByText("Add");
+    const button = screen.getByText("Add Todo");
 
     fireEvent.change(input, { target: { value: "New Todo" } });
     fireEvent.click(button);

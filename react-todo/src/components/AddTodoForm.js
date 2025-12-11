@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AddTodoForm = ({ addTodo }) => {
+function AddTodoForm({ addTodo }) {
   const [input, setInput] = useState("");
 
   const handleSubmit = (e) => {
@@ -19,9 +19,9 @@ const AddTodoForm = ({ addTodo }) => {
         onChange={(e) => setInput(e.target.value)}
         placeholder="Add a new todo"
       />
-      <button type="submit">Add</button>
+      <button type="submit">Add Todo</button>
     </form>
   );
-};
+}
 
 export default AddTodoForm;
