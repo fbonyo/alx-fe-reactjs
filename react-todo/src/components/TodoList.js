@@ -9,9 +9,10 @@ const TodoList = () => {
   ]);
 
   const addTodo = (text) => {
+    if (text.trim() === '') return;
     const newTodo = {
       id: Date.now(),
-      text,
+      text: text.trim(),
       completed: false
     };
     setTodos([...todos, newTodo]);
@@ -31,11 +32,12 @@ const TodoList = () => {
     <div className="todo-list">
       <h1>Todo List</h1>
       <AddTodoForm onAdd={addTodo} />
-      <ul>
+      <ul data-testid="todo-list">
         {todos.map(todo => (
           <li 
             key={todo.id}
             className={`todo-item ${todo.completed ? 'completed' : ''}`}
+            data-testid={`todo-item-${todo.id}`}
           >
             <span 
               onClick={() => toggleTodo(todo.id)}
@@ -43,12 +45,14 @@ const TodoList = () => {
                 textDecoration: todo.completed ? 'line-through' : 'none',
                 cursor: 'pointer'
               }}
+              data-testid={`todo-text-${todo.id}`}
             >
               {todo.text}
             </span>
             <button 
               onClick={() => deleteTodo(todo.id)}
               className="delete-btn"
+              data-testid={`delete-btn-${todo.id}`}
             >
               Delete
             </button>
